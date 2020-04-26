@@ -1,9 +1,11 @@
 [package]
-name = "mandelbrot"
+name = "rustelbrot"
 version = "0.1.0"
 authors = ["Juan Gomez <atilag@gmail.com>"]
 edition = "2018"
 license = "Apache-2.0"
+description = "The beatiful Mandelbrot fractal effect exported to the WEB"
+repository = "https://github.com/atilag/rustdelbrot.git"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

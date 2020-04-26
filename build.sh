@@ -1,6 +1,3 @@
 #!/bin/bash
 wasm-pack build
-pushd .
-cd www
-npm start
-popd
+cp pkg/rustelbrot.wasm .
