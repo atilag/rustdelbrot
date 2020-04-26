@@ -1,5 +1,5 @@
 [package]
-name = "rustelbrot"
+name = "rustdelbrot"
 version = "0.1.0"
 authors = ["Juan Gomez <atilag@gmail.com>"]
 edition = "2018"
