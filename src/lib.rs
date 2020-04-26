@@ -28,11 +28,6 @@ lazy_static! {
     static ref ZOOM: Mutex<f64> = Mutex::new(0.009);
 }
 
-#[wasm_bindgen(module = "/www/draw.js")]
-extern "C" {
-    fn draw(x: c_double, y: c_double, r: c_double, g: c_double, b: c_double);
-    fn draw_buffer();
-}
 
 #[wasm_bindgen]
 pub fn resize(width: c_double, height: c_double) {
@@ -41,7 +36,7 @@ pub fn resize(width: c_double, height: c_double) {
 }
 
 #[wasm_bindgen]
-pub fn update(_offset_x: c_double, _offset_y: c_double, data: &Uint32Array )
+pub fn update(_offset_x: c_double, _offset_y: c_double, data: &Uint32Array)
     -> c_double {
     let (width, height) = *DIMS.lock().unwrap();
     const MAX_ITERS : u32 = 1024;
@@ -69,6 +64,5 @@ pub fn update(_offset_x: c_double, _offset_y: c_double, data: &Uint32Array )
             write_buffer(x,y,width as usize, r,g,b, &data);
         }
     }
-    draw_buffer();
     zoom
 }

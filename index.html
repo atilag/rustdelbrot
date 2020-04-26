@@ -2,23 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>WASM Madelbrot</title>
+    <title>Rustdelbrot - A WASM Mandelbrot written in Rust</title>
   </head>
   <body>
     <canvas id="canvas" style='position:absolute; left:0px; top:0px;'></canvas>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
-    <script>
+    <script type="module">
+      import init, {update,resize} from "./pkg/rustelbrot.js";
 
-      fetch("rustelbrot.wasm").then(response =>
-        response.arrayBuffer()
-      ).then(bytes =>
-        WebAssembly.instantiate(bytes)
-      ).then(results => {
 
-        let wasm = {
-          update: results.instance.exports.update,
-          resize: results.instance.exports.resize,
-        };
+      async function run(){
+
+        await init();
 
         const WIDTH = 800;
         const HEIGHT = 640;
@@ -34,21 +29,20 @@
         var buf8 = new Uint8ClampedArray(buf);
         var data = new Uint32Array(buf);
 
-        global.render_data = {
-            ctx: ctx,
-            image_data: image_data,
-            eight_bit_buffer: buf8
-        }
-
-        function resize() {
-            let ctx = render_data.ctx;
+        function html_resize() {
             ctx.canvas.width = WIDTH;
             ctx.canvas.height = HEIGHT;
-            wasm.resize(canvas.width, canvas.height);
+            resize(canvas.width, canvas.height);
         }
 
+        function draw_buffer() {
+          image_data.data.set(buf8);
+          ctx.putImageData(image_data, 0, 0);
+        };
+
         function render(timestamp){
-            let zoom = wasm.update(offset_x, offset_y, data);
+            let zoom = update(offset_x, offset_y, data);
+            draw_buffer();
             ctx.fillStyle = "#FFFFFF";
             ctx.fillText("zoom: " + zoom, 10, 90);
             requestAnimationFrame(render);
@@ -65,9 +59,11 @@
             }
         })
 
-        resize();
+        html_resize();
         render();
+      }
 
+      run();
     </script>
   </body>
 </html>
