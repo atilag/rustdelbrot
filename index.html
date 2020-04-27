@@ -5,9 +5,9 @@
     <title>Rustdelbrot - A WASM Mandelbrot written in Rust</title>
   </head>
   <body>
-    <canvas id="canvas" style='position:absolute; left:0px; top:0px;'></canvas>
+    <canvas id="canvas" style='position:absolute; left:0px; top:0px; height:100%; width: 100%;'></canvas>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
-    <script type="module">
+    <script type="module" >
       import init, {update,resize} from "./pkg/rustdelbrot.js";
 
 
@@ -15,24 +15,22 @@
 
         await init();
 
-        const WIDTH = 800;
-        const HEIGHT = 640;
-
         var offset_x = 0;
         var offset_y = 0;
+        var zoom = 0;
 
         let canvas = document.getElementById('canvas');
         let ctx = canvas.getContext("2d");
-        var image_data = ctx.getImageData(0, 0, WIDTH, HEIGHT);
+        var image_data = ctx.getImageData(0, 0, window.innerWidth * 0.8, window.innerHeight * 0.8);
         ctx.font = "20px Georgia";
         var buf = new ArrayBuffer(image_data.data.length);
         var buf8 = new Uint8ClampedArray(buf);
         var data = new Uint32Array(buf);
 
         function html_resize() {
-            ctx.canvas.width = WIDTH;
-            ctx.canvas.height = HEIGHT;
-            resize(canvas.width, canvas.height);
+            ctx.canvas.width = window.innerWidth * 0.8;
+            ctx.canvas.height = window.innerHeight * 0.8;
+            resize(ctx.canvas.width, ctx.canvas.height);
         }
 
         function draw_buffer() {
@@ -41,16 +39,16 @@
         };
 
         function render(timestamp){
-            let zoom = update(offset_x, offset_y, data);
-            draw_buffer();
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillText("zoom: " + zoom, 10, 90);
-            requestAnimationFrame(render);
+          zoom = update(offset_x, offset_y, data);
+          draw_buffer();
+          ctx.fillStyle = "#FFFFFF";
+          ctx.fillText("zoom: " + zoom, 10, 90);
+          requestAnimationFrame(render);
         };
 
         // This is not working as expected when we are zooming in
         window.addEventListener('keydown', e => {
-            const OFFSET = 40;
+            const OFFSET = 30 * zoom;
             switch(e.key){
                 case "ArrowLeft": offset_x -= OFFSET; break;
                 case "ArrowRight": offset_x += OFFSET; break;

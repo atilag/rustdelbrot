@@ -36,18 +36,18 @@ pub fn resize(width: c_double, height: c_double) {
 }
 
 #[wasm_bindgen]
-pub fn update(_offset_x: c_double, _offset_y: c_double, data: &Uint32Array)
+pub fn update(mut offset_x: c_double, mut offset_y: c_double, data: &Uint32Array)
     -> c_double {
     let (width, height) = *DIMS.lock().unwrap();
-    const MAX_ITERS : u32 = 1024;
+    const MAX_ITERS : u32 = 127;
     let mut zoom = 0.;
     if let Ok(ref mut mutex) = ZOOM.lock() {
-        **mutex *= 0.98;
+        **mutex *= 0.91;
         zoom = **mutex;
     }
 
-    let offset_y = -0.808 + _offset_y * zoom;
-    let offset_x = -0.1998 + _offset_x * zoom;
+    //offset_y *= zoom;
+    //offset_x *= zoom;
 
     let mut c = Complex64{
         re: -1. * width / 2. * zoom + offset_x,

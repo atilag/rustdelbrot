@@ -6,12 +6,12 @@
 */
 export function resize(width: number, height: number): void;
 /**
-* @param {number} _offset_x 
-* @param {number} _offset_y 
+* @param {number} offset_x 
+* @param {number} offset_y 
 * @param {Uint32Array} data 
 * @returns {number} 
 */
-export function update(_offset_x: number, _offset_y: number, data: Uint32Array): number;
+export function update(offset_x: number, offset_y: number, data: Uint32Array): number;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 

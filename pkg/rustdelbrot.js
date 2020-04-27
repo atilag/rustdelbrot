@@ -52,14 +52,14 @@ function addBorrowedObject(obj) {
     return stack_pointer;
 }
 /**
-* @param {number} _offset_x
-* @param {number} _offset_y
+* @param {number} offset_x
+* @param {number} offset_y
 * @param {Uint32Array} data
 * @returns {number}
 */
-export function update(_offset_x, _offset_y, data) {
+export function update(offset_x, offset_y, data) {
     try {
-        var ret = wasm.update(_offset_x, _offset_y, addBorrowedObject(data));
+        var ret = wasm.update(offset_x, offset_y, addBorrowedObject(data));
         return ret;
     } finally {
         heap[stack_pointer++] = undefined;
