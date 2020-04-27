@@ -42,7 +42,7 @@ pub fn update(offset_x: c_double, offset_y: c_double, data: &Uint32Array)
     const MAX_ITERS : u32 = 127;
     let mut zoom = 0.;
     if let Ok(ref mut mutex) = ZOOM.lock() {
-        **mutex *= 0.91;
+        **mutex *= 0.98;
         zoom = **mutex;
     }
 
