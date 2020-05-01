@@ -3,6 +3,7 @@ extern crate num_complex;
 use num_complex::Complex64;
 use js_sys::Uint32Array;
 
+
 // pub fn calc_color(iter: Option<u32>, iters: u32) -> (u32, u32, u32) {
 //     let (mut r,mut g,mut b) = (0, 0, 0);
 //     let iter : u32 = match iter {
@@ -37,15 +38,10 @@ pub fn calc_color(iter: Option<u32>) -> (u32, u32, u32) {
 pub fn mandelbrot_set(c: Complex64, iters: u32)
     -> Option<u32> {
     let mut z = Complex64 { re: 0.0, im: 0.0 };
-    for i in 0..iters {
+    (0..iters).find(|_|{
         z = z * z + c;
-        if z.norm_sqr() > 4.0 {
-            return Some(i);
-        }
-    }
-
-    None
-
+        z.norm_sqr() > 4.0
+    })
 }
 
 

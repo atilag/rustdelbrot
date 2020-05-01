@@ -11,12 +11,15 @@ mod utils;
 extern crate lazy_static;
 extern crate js_sys;
 
+
 use mandelbrot::{mandelbrot_set, calc_color, write_buffer};
 use std::os::raw::c_double;
 use std::sync::Mutex;
 use wasm_bindgen::prelude::*;
 use num_complex::Complex64;
 use js_sys::Uint32Array;
+use rayon::prelude::*;
+
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
 #[cfg(feature = "wee_alloc")]
