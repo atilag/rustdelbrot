@@ -3,34 +3,27 @@ extern crate num_complex;
 use num_complex::Complex64;
 use js_sys::Uint32Array;
 
-// pub fn calc_color(iter: Option<u32>, iters: u32) -> (u32, u32, u32) {
-//     let (mut r,mut g,mut b) = (0, 0, 0);
-//     let iter : u32 = match iter {
-//         Some(value) => value,
-//         None => return(r, g, b)
-//     };
-//     let color = 255 * iter / (iters - 1);
-//     let block = iters / 4;
-//     if iter < block {
-//         r = color;
-//         b = color;
-//     } else if iter >= block && iter < block * 2 {
-//         b = color;
-//         g = color;
-//     } else if iter >= block * 2 && iter < block * 3 {
-//         r = color;
-//         g = color;
-//     } else if iter >= block * 3 && iter < block * 4 {
-//         r = color;
-//     }
-//     (r, g, b)
-// }
-
-pub fn calc_color(iter: Option<u32>) -> (u32, u32, u32) {
-    match iter {
-        Some(value) => (value, value, value),
-        None => (0, 0, 0)
+pub fn calc_color(iter: Option<u32>, iters: u32) -> (u32, u32, u32) {
+    let (mut r,mut g,mut b) = (0, 0, 0);
+    let iter : u32 = match iter {
+        Some(value) => value,
+        None => return(r, g, b)
+    };
+    let color = 255 * iter / (iters - 1);
+    let block = iters / 4;
+    if iter < block {
+        r = color;
+        b = color;
+    } else if iter >= block && iter < block * 2 {
+        b = color;
+        g = color;
+    } else if iter >= block * 2 && iter < block * 3 {
+        r = color;
+        g = color;
+    } else if iter >= block * 3 && iter < block * 4 {
+        r = color;
     }
+    (r, g, b)
 }
 
 

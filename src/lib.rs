@@ -57,7 +57,7 @@ pub fn update(offset_x: c_double, offset_y: c_double, data: &Uint32Array)
         for y in 0..height as usize {
             tmp.im += zoom;
             let value = mandelbrot_set(tmp, MAX_ITERS);
-            let (r,g,b) = calc_color(value);
+            let (r,g,b) = calc_color(value, MAX_ITERS);
             write_buffer(x,y,width as usize, r,g,b, &data);
         }
     }
